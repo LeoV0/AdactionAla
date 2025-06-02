@@ -16,7 +16,7 @@ import java.util.Optional;
 @Service
 public class VolunteersService {
 
-    private static final Logger logger = LoggerFactory.getLogger(AssociationService.class);
+    private static final Logger logger = LoggerFactory.getLogger(VolunteersService.class);
 
     private final VolunteersRepository volunteersRepository;
     private final ObjectMapper objectMapper;
@@ -34,11 +34,11 @@ public class VolunteersService {
         return volunteersRepository.findAll();
     }
 
-    public void deleteAssociation(Long id) {
+    public void deleteVolunteers(Long id) {
         volunteersRepository.deleteById(id);
     }
 
-    public Volunteers saveAssociation(Volunteers volunteers) {
+    public Volunteers saveVolunteers(Volunteers volunteers) {
         return volunteersRepository.save(volunteers);
     }
 
