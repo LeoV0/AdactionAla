@@ -7,26 +7,28 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 // import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 @Data
 @Entity
-// @Table(name="associations")
 public class Association {
 
-  @Id
-  @GeneratedValue(strategy=GenerationType.IDENTITY)
-  private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-  // @Column(name="associationName")
-  private String ass_name;
+    @JsonProperty("name")
+    private String ass_name;
 
-  // @Column(name="associationDescription")
-  private String ass_description;
+    @JsonProperty("description")
+    private String ass_description;
 
-  private Number ass_points;
+    @JsonProperty("points")
+    private Integer ass_points;
 
-  private String ass_image;
+    @JsonProperty("image")
+    private String ass_image;
 
 
 
