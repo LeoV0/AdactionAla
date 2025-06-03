@@ -1,9 +1,11 @@
 package com.ada.adaction_ala.controller;
 
+import com.ada.adaction_ala.model.VolunteerRegisterRequest;
 import com.ada.adaction_ala.model.VolunteerUpdateRequest;
 import com.ada.adaction_ala.model.Volunteers;
 import com.ada.adaction_ala.service.VolunteersService;
 
+import org.springframework.http.HttpStatus;
 // import org.hibernate.mapping.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -41,8 +43,6 @@ public class VolunteersController {
                        .orElseGet(() -> ResponseEntity.status(401).body(null));
     }
 
- 
-
     @GetMapping("/search")
     public ResponseEntity<List<Volunteers>> searchByLocation(@RequestParam String location) {
         List<Volunteers> results = volunteersService.findByLocation(location);
@@ -58,4 +58,20 @@ public class VolunteersController {
             return ResponseEntity.status(500).body("Failed to import volunteers: " + e.getMessage());
         }
     }
+
+    
+
+    @PostMapping("/register")
+    public ResponseEntity<Volunteers> registerVolunteer(@RequestBody VolunteerRegisterRequest registerRequest) {
+        Optional<Volunteers> registeredVolunteer = volunteersService.registerVolunteer(registerRequest);
+        if (registeredVolunteer.isPresent()) {
+            return ResponseEntity.ok(registeredVolunteer.get());
+        } else if (!registeredVolunteer.isPresent())  {
+            return ResponseEntity.status(HttpStatus.CONFLICT).build(); // 409 Conflict
+        } else {
+            return registeredVolunteer.map(ResponseEntity::ok)
+                              .orElseGet(() -> ResponseEntity.badRequest().build());
+            }
+}
+
 }

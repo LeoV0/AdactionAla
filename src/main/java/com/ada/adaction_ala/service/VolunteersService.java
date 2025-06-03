@@ -1,5 +1,6 @@
 package com.ada.adaction_ala.service;
 
+import com.ada.adaction_ala.model.VolunteerRegisterRequest;
 import com.ada.adaction_ala.model.VolunteerUpdateRequest;
 import com.ada.adaction_ala.model.Volunteers;
 import com.ada.adaction_ala.repository.VolunteersRepository;
@@ -81,6 +82,24 @@ public class VolunteersService {
         }
 
         return Optional.of(volunteersRepository.save(volunteer));
+    }
+
+    public Optional<Volunteers> registerVolunteer(VolunteerRegisterRequest request) {
+        // Vérifier si l’email (ou username) est déjà pris
+        Optional<Volunteers> existingVolunteer = volunteersRepository.findByVl_username(request.getEmail());
+        if (existingVolunteer.isPresent()) {
+            return Optional.empty();
+        }
+
+        Volunteers volunteer = new Volunteers();
+        volunteer.setVl_firstname(request.getFirstname());
+        volunteer.setVl_lastname(request.getLastname());
+        volunteer.setVl_email(request.getEmail());
+        volunteer.setVl_password(passwordEncoder.encode(request.getPassword()));
+        volunteer.setVl_location(request.getLocation());
+
+        Volunteers saved = volunteersRepository.save(volunteer);
+        return Optional.of(saved);
     }
 
     public void importVolunteersFromJson() throws IOException {
