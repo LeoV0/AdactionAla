@@ -1,12 +1,11 @@
 package com.ada.adaction_ala.controller;
 
+import com.ada.adaction_ala.model.VolunteerUpdateRequest;
 import com.ada.adaction_ala.model.Volunteers;
 import com.ada.adaction_ala.service.VolunteersService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.Optional;
 
 @RestController
@@ -23,14 +22,19 @@ public class VolunteersController {
         return volunteersService.findAllVolunteers();
     }
 
-    @GetMapping("/volunteers/{id}")
-    public ResponseEntity<Volunteers> findVolunteersById(@PathVariable Long id) {
-        Optional<Volunteers> volunteer = volunteersService.findVolunteersById(id);
-        return volunteer.map(ResponseEntity::ok)
-                        .orElseGet(() -> ResponseEntity.notFound().build());
+    @PutMapping("/volunteers/{id}")
+    public ResponseEntity<Volunteers> updateVolunteer(@PathVariable Long id, @RequestBody VolunteerUpdateRequest updateRequest) {
+        Optional<Volunteers> updatedVolunteer = volunteersService.updateVolunteer(id, updateRequest);
+        return updatedVolunteer.map(ResponseEntity::ok)
+                              .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    // FirstName LastName etc..
+     @PostMapping("/volunteers/login")
+    public ResponseEntity<Volunteers> login(@RequestParam String firstname, @RequestParam String password) {
+        Optional<Volunteers> volunteer = volunteersService.login(firstname, password);
+        return volunteer.map(ResponseEntity::ok)
+                       .orElseGet(() -> ResponseEntity.status(401).body(null));
+    }
 
     @PostMapping("/volunteers/import")
     public ResponseEntity<String> importVolunteers() {
