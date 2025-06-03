@@ -1,5 +1,4 @@
-{
-  "waste_types": [
+[
     {
       "value": "cigarette",
       "label": "🚬 Mégots de cigarette",
@@ -32,4 +31,3 @@
       "quantity": 0
     }
   ]
-}
