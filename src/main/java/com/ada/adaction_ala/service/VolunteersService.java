@@ -30,6 +30,10 @@ public class VolunteersService {
         return volunteersRepository.findById(id);
     }
 
+    public List<Volunteers> findByLocation(String location) {
+    return volunteersRepository.findByVlLocationIgnoreCase(location);
+}
+
     public Iterable<Volunteers> findAllVolunteers() {
         return volunteersRepository.findAll();
     }
