@@ -3,12 +3,17 @@ package com.ada.adaction_ala.controller;
 import com.ada.adaction_ala.model.VolunteerUpdateRequest;
 import com.ada.adaction_ala.model.Volunteers;
 import com.ada.adaction_ala.service.VolunteersService;
+
+// import org.hibernate.mapping.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
+
+
 @RestController
+@RequestMapping("/volunteers")
 public class VolunteersController {
 
     private final VolunteersService volunteersService;
@@ -17,7 +22,7 @@ public class VolunteersController {
         this.volunteersService = volunteersService;
     }
 
-    @GetMapping("/volunteers")
+    @GetMapping("")
     public Iterable<Volunteers> getVolunteers() {
         return volunteersService.findAllVolunteers();
     }
@@ -34,6 +39,14 @@ public class VolunteersController {
         Optional<Volunteers> volunteer = volunteersService.login(firstname, password);
         return volunteer.map(ResponseEntity::ok)
                        .orElseGet(() -> ResponseEntity.status(401).body(null));
+    }
+
+ 
+
+    @GetMapping("/search")
+    public ResponseEntity<List<Volunteers>> searchByLocation(@RequestParam String location) {
+        List<Volunteers> results = volunteersService.findByLocation(location);
+        return ResponseEntity.ok(results);
     }
 
     @PostMapping("/volunteers/import")

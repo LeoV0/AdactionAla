@@ -6,12 +6,20 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import java.util.Optional;
+import java.util.List;
 
 @Repository
+
 public interface VolunteersRepository extends CrudRepository<Volunteers, Long> {
+
     @Query("SELECT v FROM Volunteers v WHERE v.vl_username = :username")
     Optional<Volunteers> findByVl_username(@Param("username") String vl_username);
 
      @Query("SELECT v FROM Volunteers v WHERE v.vl_firstname = :firstname")
     Optional<Volunteers> findByVl_firstname(@Param("firstname") String firstname);
 }
+
+    @Query("SELECT v FROM Volunteers v WHERE TRIM(LOWER(v.vl_location)) = LOWER(:location)")
+    List<Volunteers> findByVlLocationIgnoreCase(@Param("location") String location);
+}
+

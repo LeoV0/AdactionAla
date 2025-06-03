@@ -34,6 +34,16 @@ public class VolunteersService {
         return volunteersRepository.findByVl_username(username);
     }
 
+    public List<Volunteers> findByLocation(String location) {
+        System.out.println("Requête avec : '" + location + "'");
+        List<Volunteers> list = volunteersRepository.findByVlLocationIgnoreCase(location);
+        System.out.println("Résultats : " + list.size());
+        return list;
+        }
+
+//     return volunteersRepository.findByVlLocationIgnoreCase(location);
+// }
+
     public Iterable<Volunteers> findAllVolunteers() {
         return volunteersRepository.findAll();
     }
