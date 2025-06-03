@@ -1,5 +1,6 @@
 package com.ada.adaction_ala.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.ada.adaction_ala.config.LocalDateTimeFromDateDeserializer;
@@ -34,6 +35,7 @@ public class Volunteers {
     private String vl_username;
 
     @JsonProperty("password")
+    @JsonIgnore
     @Column(nullable = false)
     private String vl_password;
 
@@ -52,4 +54,15 @@ public class Volunteers {
 
     @JsonProperty("points")
     private Integer vl_points;
+
+    @PrePersist
+    protected void onCreate() {
+        vl_created_at = LocalDateTime.now();
+        vl_updated_at = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        vl_updated_at = LocalDateTime.now();
+    }
 }
