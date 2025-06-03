@@ -17,7 +17,6 @@ public interface VolunteersRepository extends CrudRepository<Volunteers, Long> {
 
      @Query("SELECT v FROM Volunteers v WHERE v.vl_firstname = :firstname")
     Optional<Volunteers> findByVl_firstname(@Param("firstname") String firstname);
-}
 
     @Query("SELECT v FROM Volunteers v WHERE TRIM(LOWER(v.vl_location)) = LOWER(:location)")
     List<Volunteers> findByVlLocationIgnoreCase(@Param("location") String location);
