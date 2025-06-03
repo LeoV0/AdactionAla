@@ -1,7 +1,7 @@
 package com.ada.adaction_ala.service;
 
 import com.ada.adaction_ala.model.VolunteerRegisterRequest;
-import com.ada.adaction_ala.model.VolunteerUpdateRequest;
+import com.ada.adaction_ala.model.ProfilUpdateRequest;
 import com.ada.adaction_ala.model.Volunteers;
 import com.ada.adaction_ala.repository.VolunteersRepository;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -64,7 +64,7 @@ public class VolunteersService {
         return volunteersRepository.save(volunteers);
     }
 
-    public Optional<Volunteers> updateVolunteer(Long id, VolunteerUpdateRequest updateRequest) {
+    public Optional<Volunteers> updateVolunteer(Long id, ProfilUpdateRequest updateRequest) {
         Optional<Volunteers> optionalVolunteer = volunteersRepository.findById(id);
         if (optionalVolunteer.isEmpty()) {
             return Optional.empty();

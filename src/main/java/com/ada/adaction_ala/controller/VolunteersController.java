@@ -1,7 +1,7 @@
 package com.ada.adaction_ala.controller;
 
 import com.ada.adaction_ala.model.VolunteerRegisterRequest;
-import com.ada.adaction_ala.model.VolunteerUpdateRequest;
+import com.ada.adaction_ala.model.ProfilUpdateRequest;
 import com.ada.adaction_ala.model.Volunteers;
 import com.ada.adaction_ala.service.VolunteersService;
 
@@ -29,8 +29,8 @@ public class VolunteersController {
         return volunteersService.findAllVolunteers();
     }
 
-    @PutMapping("/volunteers/{id}")
-    public ResponseEntity<Volunteers> updateVolunteer(@PathVariable Long id, @RequestBody VolunteerUpdateRequest updateRequest) {
+    @PutMapping("/{id}")
+    public ResponseEntity<Volunteers> updateVolunteer(@PathVariable Long id, @RequestBody ProfilUpdateRequest updateRequest) {
         Optional<Volunteers> updatedVolunteer = volunteersService.updateVolunteer(id, updateRequest);
         return updatedVolunteer.map(ResponseEntity::ok)
                               .orElseGet(() -> ResponseEntity.notFound().build());
