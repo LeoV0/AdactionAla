@@ -30,7 +30,7 @@ public class VolunteersController {
         return volunteersService.findAllVolunteers();
     }
 
-    @PutMapping("/volunteers/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<Volunteers> updateVolunteer(@PathVariable Long id, @RequestBody ProfilUpdateRequest updateRequest) {
         Optional<Volunteers> updatedVolunteer = volunteersService.updateVolunteer(id, updateRequest);
         return updatedVolunteer.map(ResponseEntity::ok)
