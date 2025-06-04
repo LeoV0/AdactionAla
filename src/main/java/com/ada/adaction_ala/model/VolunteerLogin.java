@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class VolunteerLogin {
-  private String firstname;
-  private String password;
+  public String firstname;
+  public String password;
   
 }

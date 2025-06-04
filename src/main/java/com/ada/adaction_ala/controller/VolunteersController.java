@@ -2,6 +2,7 @@ package com.ada.adaction_ala.controller;
 
 import com.ada.adaction_ala.model.VolunteerRegisterRequest;
 import com.ada.adaction_ala.model.ProfilUpdateRequest;
+import com.ada.adaction_ala.model.VolunteerLogin;
 import com.ada.adaction_ala.model.Volunteers;
 import com.ada.adaction_ala.service.VolunteersService;
 
@@ -36,12 +37,12 @@ public class VolunteersController {
                               .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-     @PostMapping("/volunteers/login")
-    public ResponseEntity<Volunteers> login(@RequestParam String firstname, @RequestParam String password) {
-        Optional<Volunteers> volunteer = volunteersService.login(firstname, password);
-        return volunteer.map(ResponseEntity::ok)
-                       .orElseGet(() -> ResponseEntity.status(401).body(null));
-    }
+     @PostMapping("/login")
+public ResponseEntity<Volunteers> login(@RequestBody VolunteerLogin volunteerLogin) {
+    Optional<Volunteers> volunteer = volunteersService.login(volunteerLogin.firstname, volunteerLogin.password);
+    return volunteer.map(ResponseEntity::ok)
+                   .orElseGet(() -> ResponseEntity.status(401).body(null));
+}
 
     @GetMapping("/search")
     public ResponseEntity<List<Volunteers>> searchByLocation(@RequestParam String location) {
