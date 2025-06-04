@@ -53,9 +53,16 @@ public class VolunteersService {
         return volunteersRepository.findById(id);
     }
 
-    public void deleteVolunteers(Long id) {
-        volunteersRepository.deleteById(id);
+    public boolean deleteVolunteer(Long id) {
+        Optional<Volunteers> volunteer = volunteersRepository.findById(id);
+        if (volunteer.isPresent()) {
+            volunteersRepository.deleteById(id);
+            return true;
+        } else {
+            return false;
+        }
     }
+
 
     public Volunteers saveVolunteers(Volunteers volunteers) {
         if (volunteers.getVl_password() != null) {

@@ -29,7 +29,7 @@ public class VolunteersController {
         return volunteersService.findAllVolunteers();
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/volunteers/{id}")
     public ResponseEntity<Volunteers> updateVolunteer(@PathVariable Long id, @RequestBody ProfilUpdateRequest updateRequest) {
         Optional<Volunteers> updatedVolunteer = volunteersService.updateVolunteer(id, updateRequest);
         return updatedVolunteer.map(ResponseEntity::ok)
@@ -59,7 +59,6 @@ public class VolunteersController {
         }
     }
 
-    
 
     @PostMapping("/register")
     public ResponseEntity<Volunteers> registerVolunteer(@RequestBody VolunteerRegisterRequest registerRequest) {
@@ -72,6 +71,16 @@ public class VolunteersController {
             return registeredVolunteer.map(ResponseEntity::ok)
                               .orElseGet(() -> ResponseEntity.badRequest().build());
             }
-}
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Volunteers> deleteVolunteer(@PathVariable Long id){
+        boolean deleted = volunteersService.deleteVolunteer(id);
+        if (deleted) {
+            return ResponseEntity.noContent().build(); // 204 No Content
+        } else {
+            return ResponseEntity.notFound().build(); // 404 Not Found
+        }
+    }
 
 }
